@@ -1,0 +1,344 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: .3s ease;
+}
+html, body {
+    width: 100%;
+    height: 100%;
+    user-select: none;
+    font-family: "Noto Sans KR", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+}
+ul {
+    list-style: none;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+}
+table {
+    border-collapse: collapse;
+}
+input {
+    border: none;
+    outline: none;
+    font-size: inherit;
+    
+    &[type=text] {
+        border-bottom: 1px #333333 solid;
+    }
+    &[type=button], &[type=reset] {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px #dddddd solid;
+        text-align: center;
+        cursor: pointer;
+    }
+    &[type=button] {
+        background-color: #ffaa55;
+        color: #ffffff;
+    }
+    &[type=reset] {
+        background-color: #ffffff;
+        color: #ffaa55;
+    }
+}
+
+.container {
+    border: 1px #aaaaaa solid;
+    border-radius: 5px;
+    overflow: hidden;
+}
+/* .list {
+    height: fit-content;
+
+    > div {
+        &:not(:last-child) {
+            border-bottom: 1px #dddddd solid;
+        }
+        &:hover {
+            background-color: #dddddd;
+        }
+    }
+} */
+/* .separator {
+    border-bottom: 1px #cccccc solid;
+} */
+/* .text {
+    overflow: hidden;
+    padding: 5px;
+    padding-left: 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} */
+.title {
+    padding: 5px;
+    padding-left: 10px;
+    background-color: #ffaa55;
+    border-bottom: 1px #cccccc solid;
+    color: #ffffff;
+    font-weight: 700;
+}
+.table {
+    overflow: hidden;
+    width: 100%;
+    border-radius: 5px;
+
+    th, td {
+        overflow: hidden;
+        padding: 5px;
+        border-bottom: 1px #dddddd solid;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        &:nth-child(2) {
+            width: 30%;
+            max-width: 0;
+        }
+    }
+    th {
+        border-bottom: 1px #aaaaaa solid;
+        font-weight: 700;
+    }
+    > tbody > tr:hover {
+        background-color: #dddddd;
+    }
+}
+
+#gnb_wrapper {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #ffaa55;
+
+    #gnb {
+        display: flex;
+        align-items: stretch;
+        margin: 0 auto;
+        padding: 0 10px;
+        width: 1200px;
+        min-width: 1200px;
+        height: 100%;
+
+        > a {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        > div {
+            position: relative;
+            padding: 0 10px 0 10px;
+            line-height: 70px;
+            text-align: center;
+            color: #ffffff;
+
+            > .dropdown {
+                position: absolute;
+                left: 50%;
+                width: 130px;
+                height: fit-content;
+                border-radius: 0 0 5px 5px;
+                background-color: #ffffff;
+                box-shadow: 0px 0px 5px 2px #00000033;
+                text-align: center;
+                color: #000000;
+                transform: translate(-50%, -50%) scale(0%);
+
+                > div {
+                    height: 50px;
+                    line-height: 50px;
+                    
+                    &:not(:last-child) {
+                        border-bottom: 1px #dddddd solid;
+                    }
+                    &:hover {
+                        background-color: #dddddd;
+                    }
+                }
+            }
+            &:hover {
+                color: #dddddd;
+                
+                > .dropdown {
+                    transform: translate(-50%, 0%) scale(100%);
+                }
+            }
+        }
+    }
+}
+#main_wrapper {
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 1200px;
+    min-width: 1200px;
+    height: 100%;
+    /* box-shadow: 0px 0px 5px 2px #00000033; */
+
+    > div {
+        padding: 0 10px;
+        width: 100%;
+    }
+
+    #main {
+        display: grid;
+        grid-template-rows: auto 1fr;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+
+        > article {
+            height: fit-content;
+        }
+        /* > #popular_puzzle {
+            
+        }
+        > #recent_puzzle {
+            
+        } */
+        > #random_puzzle {
+            grid-column: 1 / 3;
+        }
+    }
+    #main_search {
+        #form {
+            width: 100%;
+
+            > table {
+                width: 100%;
+
+                tr {
+                    height: 50px;
+                    border-bottom: 1px #dddddd solid;
+        
+                    &:nth-child(1), &:nth-child(4), &:nth-child(6), &:nth-child(7), &:nth-child(8) {
+                        border-bottom-color: #aaaaaa;
+                    }
+                    input[type=text] {
+                        width: 80%;
+                        height: 40px;
+                    }
+                }
+                input[type=button] {
+                    margin: 0 auto;
+                }
+            }
+            > #button {
+                width: fit-content;
+                margin: 5px auto;
+            }
+        }
+        #result {
+
+        }
+        #arrow {
+            
+        }
+        
+        .middle {
+            position: relative;
+            width: 50%;
+            max-width: 500px;
+
+            .slider {
+                position: relative;
+                z-index: 1;
+                height: 10px;
+                margin: 0 15px;
+
+                >.track {
+                    position: absolute;
+                    z-index: 1;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    border-radius: 5px;
+                    background-color: #c6aee7;
+                }
+
+                >.range {
+                    position: absolute;
+                    z-index: 2;
+                    left: 25%;
+                    right: 25%;
+                    top: 0;
+                    bottom: 0;
+                    border-radius: 5px;
+                    background-color: #ffaa55;
+                }
+
+                >.thumb {
+                    position: absolute;
+                    z-index: 3;
+                    width: 30px;
+                    height: 30px;
+                    background-color: #ffaa55;
+                    border-radius: 50%;
+
+                    &.left {
+                        left: 25%;
+                        transform: translate(-15px, -10px);
+                    }
+
+                    &.right {
+                        right: 25%;
+                        transform: translate(15px, -10px);
+                    }
+                }
+            }
+
+            input[type="range"] {
+                position: absolute;
+                /* opacity로 가린 것을 이벤트도 비활성화하기 위해 */
+                pointer-events: none;
+                appearance: none;
+                -webkit-appearance: none;
+                z-index: 2;
+                height: 10px;
+                width: 100%;
+                opacity: 0;
+
+                &::-webkit-slider-thumb {
+                    /* 겹쳐진 두 thumb를 모두 활성화 */
+                    pointer-events: all;
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 0;
+                    border: 0 none;
+                    background-color: red;
+                    cursor: pointer;
+                    /* appearance를 해야 위의 스타일들을 볼 수 있음 */
+                    -webkit-appearance: none;
+
+                    &::-moz-slider-thumb {
+                        /* 겹쳐진 두 thumb를 모두 활성화 */
+                        pointer-events: all;
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 0;
+                        border: 0 none;
+                        background-color: red;
+                        cursor: pointer;
+                        /* appearance를 해야 위의 스타일들을 볼 수 있음 */
+                        appearance: none;
+                    }
+                }
+            }
+
+        }
+    }
+}
+#footer {
+    height: 100px;
+    background-color: #dddddd;
+    line-height: 100px;
+    text-align: center;
+}

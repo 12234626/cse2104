@@ -1,0 +1,18 @@
+<svg width="97" height="21" viewBox="0 0 97 21" xmlns="http://www.w3.org/2000/svg">
+     <path style="fill: #fff;" d="m 0,0 v 20 h 1 v 1 h 80 v -4 h -1 v -1 h -5 v -3 h 5 v 3 h 1 v 1 h 11 v 4 h 5 V 1 H 96 V 0 H 40 V 7 H 37 V 0 H 8 V 7 H 5 V 1 H 4 V 0 Z m 21,5 h 7 v 3 h -7 z m 32,0 h 7 v 3 h -7 z m 32,5 h 3 v 2 H 85 Z M 5,12 h 3 v 4 H 5 Z m 32,0 h 3 v 4 h -3 z m -20,1 h 5 v 3 h -5 z m 10,0 h 5 v 3 h -5 z m 22,0 h 5 v 3 h -5 z m 10,0 h 11 v 3 H 59 Z"/>
+     <path style="fill: #000;" d="m 13,1 h 2 v 1 h 1 v 18 h -2 v -1 h -1 z"/>
+     <path style="fill: #000;" d="m 9,1 h 2 v 1 h 1 V 20 H 10 V 19 H 9 V 11 H 7 V 10 H 6 V 8 h 3 z"/>
+     <path style="fill: #000;" d="m 1,1 v 18 h 1 v 1 H 8 V 18 H 7 V 17 H 4 V 2 H 3 V 1 Z"/>
+     <path style="fill: #000;" d="m 23,13 v 4 h -6 v 2 h 1 v 1 h 14 v -2 h -1 v -1 h -5 v -3 h -1 v -1 z"/>
+     <path style="fill: #000;" d="m 17,1 v 10 h 1 v 1 H 32 V 2 H 31 V 1 Z m 3,3 h 9 v 5 h -9 z"/>
+     <path style="fill: #000;" d="m 45,1 h 2 v 1 h 1 v 18 h -2 v -1 h -1 z"/>
+     <path style="fill: #000;" d="m 41,1 h 2 v 1 h 1 V 20 H 42 V 19 H 41 V 11 H 39 V 10 H 38 V 8 h 3 z"/>
+     <path style="fill: #000;" d="m 33,1 v 18 h 1 v 1 h 6 V 18 H 39 V 17 H 36 V 2 H 35 V 1 Z"/>
+     <path style="fill: #000;" d="m 55,13 v 4 h -6 v 2 h 1 v 1 h 14 v -2 h -1 v -1 h -5 v -3 h -1 v -1 z"/>
+     <path style="fill: #000;" d="m 49,1 v 10 h 1 v 1 H 64 V 2 H 63 V 1 Z m 3,3 h 9 v 5 h -9 z"/>
+     <path style="fill: #000;" d="m 71,13 v 4 h -6 v 2 h 1 v 1 h 14 v -2 h -1 v -1 h -5 v -3 h -1 v -1 z"/>
+     <path style="fill: #000;" d="m 65,1 v 2 h 1 V 4 H 77 V 5 H 65 v 6 h 1 v 1 H 80 V 10 H 79 V 9 H 68 V 8 H 80 V 2 H 79 V 1 Z"/>
+     <path style="fill: #000;" d="m 81,13 v 2 h 1 v 1 h 11 v 3 h 1 v 1 h 2 v -6 h -1 v -1 z"/>
+     <path style="fill: #000;" d="m 95,1 v 1 h 1 V 12 H 94 V 11 H 93 V 1 Z"/>
+     <path style="fill: #000;" d="m 81,1 v 2 h 1 v 1 h 3 v 2 h -4 v 5 h 1 v 1 h 1.977754 L 84,9 h 5 v 2 h 1 v 1 h 2 V 7 H 91 V 6 L 88,5.9608051 V 4 h 4 V 2 H 91 V 1 Z"/>
+</svg>

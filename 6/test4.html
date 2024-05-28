@@ -1,0 +1,30 @@
+<form method="post" action="login.php" id="loginForm">
+    <label class="icon" for="username"><i class="fa fa-user fa-fw"></i></label>
+    <input type="text" name="username" id="username" placeholder="UserName" />
+    <label class="icon" for="email"><i class="fa fa-envelope fa-fw"></i></label>
+    <input type="text" name="email" id="email" placeholder="Email" />
+    <label class="icon" for="pass"><i class="fa fa-key fa-fw"></i>
+    </label>
+    <input type="password" name="pass" id="pass" placeholder="Password" />
+    <label class="icon" for="region"><i class="fa fa-home fa-fw"></i>
+    </label>
+    <input type="radio" name="region" id="europe" value="Europe" class="bigRadio"><span>Europe</span>
+    <input type="radio" name="region" id="usa" value="United States" class="bigRadio"><span>United States</span>
+    <label class="icon" for="payment">
+        <i class="fa fa-fw" id="payLabel"></i></label>
+    <select name="payment" id="payment"></select>
+    <label class="icon" id="long" for="save">
+        <i class="fa fa-database fa-fw"></i> Remember Me</label>
+    <input type="checkbox" name="save" id="save" class="bigCheckBox" />
+    <button type="submit"><i class="fa fa-reply fa-fw"></i> Register
+    </button>
+</form>
+<div id="errors" class="hidden"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        for (let e of document.querySelectorAll("input[type=text], input[type=password]")) {
+            e.addEventListener("focus", e => e.target.style.backgroundColor = "#FFE393");
+            e.addEventListener("blur", e => e.target.style.backgroundColor = "#FFFFFF");
+        }
+    });
+</script>

@@ -1,0 +1,18 @@
+<div>
+    <table class="list">
+        <thead>
+            <tr>
+                <%- include("head"); %>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let e of puzzles) { %>
+                <tr class="hover" onclick=<%- `"location.href='/puzzle/play?id=${e["id"]}'"` %>>
+                    <%- include("body", {
+                        "puzzle" : e
+                    }); %>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

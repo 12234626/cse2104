@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            // const clue_arr = [8, 5, 1, 0, 1, 0, 2, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 0, 1, 3, 2, 1, 1, 2, 1, 1, 1, 3, 2, 1, 1];
+            const clue_arr = [11, 14, 1, 3, 1, 2, 3, 1, 1, 1, 3, 2, 1, 2, 4, 2, 1, 1, 2, 4, 1, 2, 3, 3, 3, 1, 1, 5, 3, 1, 4, 1, 3, 2, 4, 2, 2, 5, 2, 2, 2, 2, 1, 3, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 2, 2, 4, 2, 5, 1, 3, 2, 3, 2, 4, 2, 1, 1, 2, 3, 2, 1, 2, 2, 1, 1, 1, 3, 1, 3, 1];
+            const size = clue_arr.slice(0, 2), clue = [[], []], max_clue_size = [0, 0];
+            let table = [], select_mode = 3;
+
+            for (let i = 0, j = 2; i < 2; ++i) {
+                for (let k = 0; k < size[i]; j += clue_arr[j] + 1, ++k) {
+                    if (clue_arr[j] > max_clue_size[i]) max_clue_size[i] = clue_arr[j];
+                    clue[i].push(clue_arr.slice(j + 1, j + clue_arr[j] + 1));
+                }
+                ++max_clue_size[i];
+            }
+            table = new Array(size[0]).fill(0).map(function () {
+                return new Array(size[1]).fill(0);
+            });
+
+            $(document).contextmenu(function () {
+                return false;
+            });
+            $(document).ready(function () {
+                const option = $("#option > form");
+                const wrapper = $("#wrapper");
+                const hl = wrapper.find(".hl"), hl_row = $("#hl_row"), hl_col = $("#hl_col"); // hl_cursor = $("#hl_cursor")
+                const clue_row_table = $("#clue_row"), clue_col_table = $("#clue_col");
+                const cross_table = $("#cross");
+                const cell_px = 30;
+                // const clue_row = [], clue_col = [], cross_row = [], cross_col = [];
+
+                wrapper.css({"grid-template" : `${max_clue_size[1]}fr ${size[0]}fr / ${max_clue_size[0]}fr ${size[1]}fr`});
+                hl_row.css({"width" : `${cell_px * (size[1] + max_clue_size[0])}px`, "height" : `${cell_px}px`});
+                hl_col.css({"width" : `${cell_px}px`, "height" : `${cell_px * (size[0] + max_clue_size[1])}px`});
+                // hl_cursor.css({"width" : `${cell_px}px`, "height" : `${cell_px}px`});
+                clue_row_table.css({"grid-template" : `repeat(${size[0]}, 1fr) / repeat(${max_clue_size[0]}, 1fr)`});
+                clue_col_table.css({"grid-template" : `repeat(${max_clue_size[1]}, 1fr) / repeat(${size[1]}, 1fr)`});
+                cross_table.css({"grid-template" : `repeat(${size[0]}, 1fr) / repeat(${size[1]}, 1fr)`});
+                for (let i = 0; i < size[0]; ++i) for (let j = 0; j < max_clue_size[0]; ++j) {
+                    clue_row_table.append(
+                        $(`<div class="clue clue_row cell" id="clue_row_cell_${i}_${j}""></div>`)
+                        .attr({
+                            "data-row" : `${i}`,
+                            "data-col" : `${j}`
+                        })
+                        .css({
+                            "width" : `${cell_px}px`,
+                            "height" : `${cell_px}px`,
+                            "border" : "1px #555555 solid",
+                            "border-top" : `${i && i % 5 ? "1px #555555 solid" : "2px #000000 solid"}`,
+                            "border-right" : `${max_clue_size[0] - j - 1 ? (max_clue_size[0] - j - 1) % 5 ? "1px #555555 solid" : "2px #555555 solid" : "2px #000000 solid"}`,
+                            "font-size" : `${cell_px * .7}px`
+                        })
+                    );
+                }
+                for (let j = 0; j < max_clue_size[1]; ++j) for (let i = 0; i < size[1]; ++i) {
+                    clue_col_table.append(
+                        $(`<div class="clue clue_col cell" id="clue_col_cell_${i}_${j}"></div>`)
+                        .attr({
+                            "data-row" : `${i}`,
+                            "data-col" : `${j}`
+                        })
+                        .css({
+                            "width" : `${cell_px}px`,
+                            "height" : `${cell_px}px`,
+                            "border" : "1px #555555 solid",
+                            "border-bottom" : `${max_clue_size[1] - j - 1 ? (max_clue_size[1] - j - 1) % 5 ? "1px #555555 solid" : "2px #555555 solid" : "2px #000000 solid"}`,
+                            "border-left" : `${i && i % 5 ? "1px #555555 solid" : "2px #555555 solid"}`,
+                            "font-size" : `${cell_px * .7}px`
+                        })
+                    );
+                }
+                for (let i = 0; i < size[0]; ++i) for (let j = 0; j < size[1]; ++j) {
+                    cross_table.append(
+                        $(`<div class="cross cell" id="cross_cell_${i}_${j}"></div>`)
+                        .attr({
+                            "data-row" : `${i}`,
+                            "data-col" : `${j}`
+                        })
+                        .css({
+                            "width" : `${cell_px}px`,
+                            "height" : `${cell_px}px`,
+                            "border" : "1px #555555 solid",
+                            "border-top" : `${i ? i % 5 ? "1px #555555 solid" : "2px #555555 solid" : "2px #000000 solid"}`,
+                            "border-left" : `${j ? j % 5 ? "1px #555555 solid" : "2px #555555 solid" : "2px #000000 solid"}`,
+                        })
+                    )
+                }
+                for (let i = 0; i < size[0]; ++i) for (let j = 0; j < clue[0][i].length; ++j) $(`#clue_row_cell_${i}_${max_clue_size[0] - clue[0][i].length + j}`).text(`${clue[0][i][j]}`);
+                for (let i = 0; i < size[1]; ++i) for (let j = 0; j < clue[1][i].length; ++j) $(`#clue_col_cell_${i}_${max_clue_size[1] - clue[1][i].length + j}`).text(`${clue[1][i][j]}`);
+
+                cross_table.on({
+                    "mousemove" : function (e) {
+                        const row = parseInt(e.target.dataset.row), col = parseInt(e.target.dataset.col);
+
+                        hl.css({"display" : "block"});
+                        hl_row.css({"top" : `${cell_px * (max_clue_size[1] + row)}px`});
+                        hl_col.css({"left" : `${cell_px * (max_clue_size[0] + col)}px`});
+                        // hl_cursor.css({"top" : `${cell_px * (max_clue_size[1] + row)}px`, "left" : `${cell_px * (max_clue_size[0] + col)}px`});
+                        
+                        if (select_mode != 3) {
+                            table[row][col] = select_mode;
+                            $(e.target).css({"background-color" : select_mode == 2 ? "#000000" : select_mode == 1 ? "#aaaaaa" : "#00000000"});
+                        }
+                        // hl_cursor.css({"background-color" : select_mode == 2 ? "#000000" : select_mode == 1 ? "#aaaaaa" : "#555555"});
+                    },
+                    "mouseleave" : function () {
+                        hl.css({"display" : "none"});
+                        select_mode = 3;
+                    },
+                    "mousedown" : function (e) {
+                        const row = parseInt(e.target.dataset.row), col = parseInt(e.target.dataset.col);
+
+                        if (((e.button === 0 || e.which === 1) && option.find(":input[name=select]:checked").val() != "always")) {
+                            select_mode = table[row][col] != 2 ? 2 : 0;
+                        } else if (((e.button === 0 || e.which === 1) && option.find(":input[name=select]:checked").val() == "always") || e.button === 2 || e.which === 3) {
+                            select_mode = table[row][col] != 1 ? 1 : 0;
+                        } else {
+                            select_mode = 3;
+                        }
+                        if (select_mode != 3) {
+                            table[row][col] = select_mode;
+                            $(e.target).css({"background-color" : select_mode == 2 ? "#000000" : select_mode == 1 ? "#aaaaaa" : "#00000000"});
+                        }
+                    },
+                    "mouseup" : function (e) {
+                        select_mode = 3;
+                    }
+                });
+            });
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html, body {
+                width: 100%;
+                height: 100%;
+                user-select: none;
+            }
+            #wrapper {
+                display: grid;
+                width: max-content;
+                height: max-content;
+                position: relative;
+                margin: 10px;
+                user-select: none;
+                
+                > div:not(.hl) {
+                    display: grid;
+                    width: max-content;
+                    height: max-content;
+
+                    /* &#cross {
+                        cursor: none;
+                    } */
+                }
+                > div.hl {
+                    display: none;
+                    position: absolute;
+                    width: 10px;
+                    height: 10px;
+                    z-index: -1;
+                    background-color: #aaffaaaa;
+                    transition: .05s ease;
+                }
+            }
+            .cell {
+                /* border: 1px #000000 solid; */
+                box-sizing: border-box;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="option">
+            <form>
+                <div>
+                    <p>select mode  </p>
+                    <input type="radio" name="select" id="select" value="select" checked="checked"/><label for="select">select</label>
+                    <input type="radio" name="select" id="always" value="always"/><label for="always">always</label>
+                    <input type="radio" name="select" id="cycle" value="cycle"/><label for="cycle">cycle</label>
+                </div>
+                <div>
+                    <p>error check</p>
+                    <input type="radio" name="error" id="yes" value="yes" checked="checked"/><label for="yes">yes</label>
+                    <input type="radio" name="error" id="no" value="no"/><label for="no">no</label>
+                </div>
+            </form>
+        </div>
+
+        <hr/>
+
+        <div id="wrapper">
+            <div class="hl" id="hl_row"></div>
+            <div class="hl" id="hl_col"></div>
+            <div></div>
+            <div class="clue" id="clue_col"></div>
+            <div class="clue" id="clue_row"></div>
+            <div id="cross"></div>
+            <!-- <div class="hl" id="hl_cursor"></div> -->
+        </table>
+    </body>
+</html>

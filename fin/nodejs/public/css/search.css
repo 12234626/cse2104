@@ -1,0 +1,49 @@
+.indexer {
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+    width: fit-content;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+
+    > * {
+        margin: 0 5px;
+    }
+    ul {
+        height: 100%;
+        background-color: #ccc;
+        border-radius: 15px;
+
+        > li {
+            overflow: hidden;
+            float: left;
+            width: 30px;
+            height: 100%;
+            border-radius: 15px;
+
+            &.selected {
+                background-color: #f96;
+                color: #fff;
+            }
+            > a {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    .arrow {
+        width: 30px;
+        height: 100%;
+        border-radius: 15px;
+        color: #fff;
+
+        &:not(.enabled) {
+            background-color: #ccc;
+            color: #333;
+        }
+        &.enabled:not(:hover) {
+            background-color: #f96;
+        }
+    }
+}

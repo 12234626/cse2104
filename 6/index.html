@@ -1,0 +1,48 @@
+<p id="here">hello <span>there</span></p>
+<ul>
+    <li>France</li>
+    <li>Spain</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+    <li>Thailand</li>
+</ul>
+<div id="main">
+    <a href="somewhere.html"><img src="whatever.gif" class="thumb"></a>
+    <ul></ul>
+</div>
+<script>
+    // const node = document.getElementById("here"); // outputs: hello <span>there</span>
+    // console.log(node.innerHTML); // outputs: hello there
+    // console.log(node.textContent);
+    // const items = document.getElementsByTagName("li");
+    // for (let i = 0; i < items.length; i++) { // outputs: France, then Spain, then Thailand
+    //     console.log(items[i].textContent);
+    // }
+    // const link = document.querySelector("#main a"); // outputs: somewhere.html
+    // console.log(link.href);
+    // const img = document.querySelector("#main img"); // outputs: whatever.gif
+    // console.log(img.src); // outputs: thumb
+    // console.log(img.className);
+
+    // the <ul> already exists somewhere
+    const list = document.querySelector("#main ul");
+
+    // first approach, construct string with content first
+    let items = '';
+    for (let i = 0; i < 10000; i++) {
+        items += '<li>Item ' + i + '</li>';
+    }
+    // then assign innerHTML to content
+    list.innerHTML = items;
+    
+    // // second approach, add content to innerHTML incrementally
+    // list.innerHTML = '';
+    // for (let i = 0; i < 100000; i++) {
+    //     list.innerHTML += '<li>Item ' + i + '</li>';
+    // }
+</script>

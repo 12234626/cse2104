@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="js/layout.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/layout.css"/>
+
+        <title>노노그램 | <%- title %></title>
+    </head>
+    <body>
+        <nav id="gnb_wrapper">
+            <div id="gnb">
+                <ul>
+                    <li><a href="/"><img src="image/logo1.svg"/></a></li>
+                    <li><a href="/search/all">전체 퍼즐</a></li>
+                    <li><a href="/search/query">퍼즐 검색</a>
+                        <!-- <div>
+                            <div class="dropdown list">
+                                <div>
+                                    <a href="javascript:;">전체 퍼즐</a>
+                                </div>
+                                <div>
+                                    <a href="javascript:;">랜덤 퍼즐</a>
+                                </div>
+                                <div>
+                                    <a href="/search">검색</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </li>
+                    <li><a href="/puzzle/register">퍼즐 등록</a>
+                        <!-- <div>
+                            <div class="dropdown list">
+                                <div>
+                                    <a href="javascript:;">퍼즐 등록</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </li>
+                    <li><a href="/info">정보</a>
+                        <!-- <div>
+                            <div class="dropdown list">
+                                <div>
+                                    <a href="javascript:;">정보</a>
+                                </div>
+                                <div>
+                                    <a href="javascript:;">자주 묻는 질문</a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <section id="body_wrapper">
+            <%- body %>
+        </section>
+        <footer id="footer">
+            &copy; 2024. All Rights Reserved.
+        </footer>
+    </body>
+</html>

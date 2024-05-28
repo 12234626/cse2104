@@ -1,0 +1,86 @@
+<h3 class="title">퍼즐 검색</h3>
+<div>
+    <form>
+        <table class="option">
+            <!-- <tr>
+                <td>제목</td>
+                <td><input type="text"/></td>
+            </tr> -->
+
+            <tr>
+                <td>가로</td>
+                <td>
+                    <input id="col_min" type="number" name="col_min" min="1" max="200" value="<%- form["col_min"] %>">~
+                    <input id="col_max" type="number" name="col_max" min="1" max="200" value="<%- form["col_max"] %>">
+                </td>
+            </tr>
+            <tr class="sep">
+                <td>세로</td>
+                <td>
+                    <input id="row_min" type="number" name="row_min" min="1" max="200" value="<%- form["row_min"] %>">~
+                    <input id="row_max" type="number" name="row_max" min="1" max="200" value="<%- form["row_max"] %>">
+                </td>
+            </tr>
+
+            <tr>
+                <td>난이도</td>
+                <td>
+                    <input id="xd_min" type="number" name="xd_min" min="1" value="<%- form["xd_min"] %>">~
+                    <input id="xd_max" type="number" name="xd_max" min="1" value="<%- form["xd_max"] %>">
+                </td>
+            </tr>
+            <tr>
+                <td>배율</td>
+                <td>
+                    <input id="xd_mag_min" type="number" name="xd_mag_min" min="1" value="<%- form["xd_mag_min"] %>">~
+                    <input id="xd_mag_max" type="number" name="xd_mag_max" min="1" value="<%- form["xd_mag_max"] %>">
+                </td>
+            </tr>
+            <tr class="sep">
+                <td>논리</td>
+                <td>
+                    <div class="checkbox">
+                        <input id="logic_false" type="checkbox" name="logic_false" value="true" <% if (form["logic_false"]) { %> <%- "checked=\"checked\"" %> <% } %>/>
+                        <label for="logic_false">단일</label>
+                    </div>
+                    <div class="checkbox">
+                        <input id="logic_true" type="checkbox" name="logic_true" value="true" <% if (form["logic_true"]) { %> <%- "checked=\"checked\"" %> <% } %>/>
+                        <label for="logic_true">선택</label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="sep">
+                <td>등록일</td>
+                <td>
+                    <input id="date_start" name="date_start" type="date" value="<%- form["date_start"] %>">부터 ~
+                    <input id="date_end" name="date_end" type="date" value="<%- form["date_end"] %>">까지
+                </td>
+            </tr>
+
+            <tr class="sep">
+                <td>정렬</td>
+                <td>
+                    <select name="sort">
+                        <option value="size" <% if (form["sort"] === "size") { %> <%- "selected=\"selected\"" %> <% } %>>크기</option>
+                        <!-- <option value="upvote" <% if (form["sort"] === "upvote") { %> <%- "selected=\"selected\"" %> <% } %>>추천</option> -->
+                        <!-- <option value="upvote_ratio" <% if (form["sort"] === "upvote_ratio") { %> <%- "selected=\"selected\"" %> <% } %>>추천비율</option> -->
+                        <option value="xd" <% if (form["sort"] === "xd") { %> <%- "selected=\"selected\"" %> <% } %>>난이도</option>
+                        <option value="xd_mag" <% if (form["sort"] === "xd_mag") { %> <%- "selected=\"selected\"" %> <% } %>>배율</option>
+                        <!-- <option value="solved_count" <% if (form["sort"] === "solved_count") { %> <%- "selected=\"selected\"" %> <% } %>>푼사람수</option> -->
+                        <option value="date" <% if (form["sort"] === "date") { %> <%- "selected=\"selected\"" %> <% } %>>등록일</option>
+                        <option value="random" <% if (form["sort"] === "random") { %> <%- "selected=\"selected\"" %> <% } %>>랜덤</option>
+                    </select>
+                    <div class="checkbox">
+                        <input id="reverse" type="checkbox" name="reverse" value="true" <% if (form["reverse"]) { %> <%- "checked=\"checked\"" %> <% } %>/>
+                        <label for="reverse">역순</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <input class="hover" type="submit" value="검색"/>
+            <input class="hover" type="reset" value="초기화"/>
+        </div>
+    </form>
+</div>

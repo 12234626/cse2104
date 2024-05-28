@@ -1,0 +1,65 @@
+#table_wrapper {
+    > #color_preview {
+        .color_preview {
+            color: #999;
+            text-shadow: 0 0 5px #0003;
+
+            &.black {
+                color: #000;
+            }
+            &.white {
+                color: #fff;
+            }
+        }
+    }
+    > #table_container {
+        display: none;
+        grid-template-areas: ". clue_col" "clue_row cross";
+        position: relative;
+        margin: 0 auto;
+        overflow: auto hidden;
+        width: fit-content;
+        max-width: 100%;
+                
+        > div {
+            display: grid;
+            
+            &#clue_row {
+                grid-area: clue_row;
+            }
+            &#clue_col {
+                grid-area: clue_col;
+            }
+            &#cross {
+                grid-area: cross;
+                overflow: hidden;
+                /* cursor: none; */
+            }
+        }
+        > div.hl {
+            display: none;
+            position: absolute;
+            z-index: -1;
+            background-color: #69f9;
+            transition: .05s ease;
+        }
+        .cell {
+            background-color: #999c;
+            border: 1px #999 solid;
+            text-align: center;
+            
+            &.sep_top {
+                border-top: 2px #000 solid;
+            }
+            &.sep_left {
+                border-left: 2px #000 solid;
+            }
+            &.black {
+                background-color: #000c;
+            }
+            &.white {
+                background-color: #fffc;
+            }
+        }
+    }
+}

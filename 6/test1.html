@@ -1,0 +1,14 @@
+<div id="first">
+    <h1>DOM Example</h1>
+    <p>Existing element</p>
+</div>
+<script>
+    // begin by creating two new nodes
+    const text = document.createTextNode("this is dynamic");
+    const p = document.createElement("p");
+    // add the text node to the <p> element node
+    p.appendChild(text);
+    // now add the new <p> element to the <div>
+    const first = document.getElementById("first");
+    first.appendChild(p);
+</script>

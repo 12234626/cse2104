@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            const rect_size = 20, stroke_size = 1;
+            // const clue_arr = [8, 5, 1, 0, 1, 0, 2, 2, 1, 2, 1, 1, 2, 1, 1, 2, 1, 1, 2, 2, 1, 1, 0, 1, 3, 2, 1, 1, 2, 1, 1, 1, 3, 2, 1, 1];
+            const clue_arr = [18, 12, 1, 3, 2, 3, 2, 1, 4, 1, 4, 2, 3, 2, 2, 2, 4, 3, 1, 2, 4, 3, 1, 2, 5, 3, 2, 2, 4, 3, 2, 2, 2, 3, 3, 4, 1, 2, 1, 3, 2, 1, 4, 2, 1, 3, 2, 1, 3, 2, 1, 2, 2, 1, 1, 2, 1, 1, 1, 3, 2, 1, 2, 2, 1, 2, 3, 3, 4, 1, 3, 1, 7, 2, 3, 5, 2, 1, 4, 3, 3, 2, 5, 2, 6, 3, 2, 5, 4, 2, 4, 5, 2, 3, 4, 2, 2, 4, 1];
+            const clue = [[], []];
+            const size = clue_arr.slice(0, 2), max_clue_size = [0, 0];
+            let table = [];
+            const getContext = function (canvas) {
+                return $.map(canvas, function (e) {
+                    return e.getContext("2d")
+                });
+            }
+            const drawLine = function (ctx, x1, y1, x2, y2, width, style) {
+                ctx.lineWidth = stroke_size * width;
+                ctx.strokeStyle = style;
+                ctx.beginPath();
+                ctx.moveTo(rect_size * x1, rect_size * y1);
+                ctx.lineTo(rect_size * x2, rect_size * y2);
+                ctx.stroke();
+            }
+            const drawText = function (ctx, x, y, text) {
+                ctx.fillStyle = "#000000";
+                ctx.font = `${Math.floor(rect_size * 8 / 10)}px consolas`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "bottom";
+                ctx.fillText(text, x * rect_size, y * rect_size, rect_size);
+            }
+            const drawRect = function (ctx, x, y, width, height, style) {
+                ctx.fillStyle = style;
+                ctx.fillRect(rect_size * x, rect_size * y, rect_size * width, rect_size * height);
+            }
+            const clearRect = function (ctx, x, y, width, height) {
+                ctx.clearRect(rect_size * x, rect_size * y, rect_size * width, rect_size * height);
+            }
+            
+            for (let i = 0, j = 2; i < 2; ++i) {
+                for (let k = 0; k < size[i]; j += clue_arr[j] + 1, ++k) {
+                    if (clue_arr[j] > max_clue_size[i]) max_clue_size[i] = clue_arr[j];
+                    clue[i].push(clue_arr.slice(j + 1, j + clue_arr[j] + 1));
+                }
+                ++max_clue_size[i];
+            }
+            table = new Array(size[0]).fill(0).map(function () {
+                return new Array(size[1]).fill(0);
+            });
+            
+            $(document).ready(function () {
+                const option = $("#option > form");
+                const wrapper = $("#wrapper");
+                const row_clue_canvas = wrapper.find("#row_clue > canvas");
+                const col_clue_canvas = wrapper.find("#col_clue > canvas");
+                const main_canvas = wrapper.find("#main > canvas");
+                const row_clue_ctx = getContext(row_clue_canvas);
+                const col_clue_ctx = getContext(col_clue_canvas);
+                const main_ctx = getContext(main_canvas);
+                let select_mode = 0;
+
+                wrapper.css({
+                    "grid-template" : `${rect_size * max_clue_size[1]}px ${rect_size * size[0]}px / ${rect_size * max_clue_size[0]}px ${rect_size * size[1]}px`,
+                });
+                row_clue_canvas.attr({
+                    "width" : `${rect_size * max_clue_size[0]}px`,
+                    "height" : `${rect_size * size[0]}px`
+                })
+                col_clue_canvas.attr({
+                    "width" : `${rect_size * size[1]}px`,
+                    "height" : `${rect_size * max_clue_size[1]}px`
+                })
+                main_canvas.attr({
+                    "width" : `${rect_size * size[1]}px`,
+                    "height" : `${rect_size * size[0]}px`
+                })
+                drawRect(row_clue_ctx[0], 0, 0, size[1], size[0], "#aaaaaa");
+                drawRect(col_clue_ctx[0], 0, 0, size[1], size[0], "#aaaaaa");
+                drawRect(main_ctx[0], 0, 0, size[1], size[0], "#aaaaaa");
+                for (let i = 0; i < max_clue_size[0]; ++i) {
+                    if ((max_clue_size[0] - i) % 5) {
+                        drawLine(row_clue_ctx[2], i, 0, i, size[0], 1, "#aaaaaa");
+                    } else {
+                        drawLine(row_clue_ctx[2], i, 0, i, size[0], 2, "#000000");
+                    }
+                }
+                for (let i = 0; i < max_clue_size[1]; ++i) {
+                    if ((max_clue_size[1] - i) % 5) {
+                        drawLine(col_clue_ctx[2], 0, i, size[1], i, 1, "#555555");
+                    } else {
+                        drawLine(col_clue_ctx[2], 0, i, size[1], i, 2, "#000000");
+                    }
+                }
+                for (let i = 0; i < size[0]; ++i) {
+                    if (i % 5) {
+                        drawLine(row_clue_ctx[2], 0, i, max_clue_size[0], i, 1, "#555555");
+                        drawLine(main_ctx[2], 0, i, size[1], i, 1, "#555555");
+                    } else {
+                        drawLine(row_clue_ctx[2], 0, i, max_clue_size[0], i, 2, "#000000");
+                        drawLine(main_ctx[2], 0, i, size[1], i, 2, "#000000");
+                    }
+                    for (let j = 0; j < clue[0][i].length; ++j) {
+                        drawRect(row_clue_ctx[0], max_clue_size[0] - clue[0][i].length + j, i, 1, 1, "#ffffff");
+                        drawText(row_clue_ctx[2], max_clue_size[0] - clue[0][i].length + j + .5, i + 1, clue[0][i][j]);
+                    }
+                }
+                for (let i = 0; i < size[1]; ++i) {
+                    if (i % 5) {
+                        drawLine(col_clue_ctx[2], i, 0, i, max_clue_size[1], 1, "#555555");
+                        drawLine(main_ctx[2], i, 0, i, size[0], 1, "#555555");
+                    } else {
+                        drawLine(col_clue_ctx[2], i, 0, i, max_clue_size[1], 2, "#000000");
+                        drawLine(main_ctx[2], i, 0, i, size[0], 2, "#000000");
+                    }
+                    for (let j = 0; j < clue[1][i].length; ++j) {
+                        drawRect(col_clue_ctx[0], i, max_clue_size[1] - clue[1][i].length + j, 1, 1, "#ffffff");
+                        drawText(col_clue_ctx[2], i + .5, max_clue_size[1] - clue[1][i].length + j + 1, clue[1][i][j]);
+                    }
+                }
+
+                main_canvas.on({
+                    "mousemove" : function (e) {
+                        const x = Math.floor(e.offsetX / rect_size), y = Math.floor(e.offsetY / rect_size);
+
+                        clearRect(row_clue_ctx[1], 0, 0, max_clue_size[0], size[0]);
+                        clearRect(col_clue_ctx[1], 0, 0, size[1], max_clue_size[1]);
+                        clearRect(main_ctx[1], 0, 0, size[1], size[0]);
+                        drawRect(row_clue_ctx[1], 0, y, max_clue_size[0], 1, "#aaffaa55");
+                        drawRect(col_clue_ctx[1], x, 0, 1, max_clue_size[1], "#aaffaa55");
+                        drawRect(main_ctx[1], 0, y, size[1], 1, "#aaffaa55");
+                        drawRect(main_ctx[1], x, 0, 1, size[0], "#aaffaa55");
+                        
+                        if (select_mode != 3) {
+                            table[y][x] = select_mode;
+                            if (select_mode == 2) drawRect(main_ctx[0], x, y, 1, 1, "#000000");
+                            else if (select_mode == 1) drawRect(main_ctx[0], x, y, 1, 1, "#ffffff");
+                            else drawRect(main_ctx[0], x, y, 1, 1, "#aaaaaa");
+                        }
+                        console.log("asdasads");
+                    },
+                    "mouseleave" : function () {
+                        clearRect(row_clue_ctx[1], 0, 0, max_clue_size[0], size[0]);
+                        clearRect(col_clue_ctx[1], 0, 0, size[1], max_clue_size[1]);
+                        clearRect(main_ctx[1], 0, 0, size[1], size[0]);
+                        select_mode = 3;
+                    },
+                    "mousedown" : function (e) {
+                        const x = Math.floor(e.offsetX / rect_size), y = Math.floor(e.offsetY / rect_size);
+                        
+                        if (((e.button === 0 || e.which === 1) && option.find(":input[name=select]:checked").val() != "always")) {
+                            select_mode = table[y][x] != 2 ? 2 : 0;
+                        } else if (((e.button === 0 || e.which === 1) && option.find(":input[name=select]:checked").val() == "always") || e.button === 2 || e.which === 3) {
+                            select_mode = table[y][x] != 1 ? 1 : 0;
+                        } else {
+                            select_mode = 3;
+                        }
+                        if (select_mode != 3) {
+                            table[y][x] = select_mode;
+                            if (select_mode == 2) drawRect(main_ctx[0], x, y, 1, 1, "#000000");
+                            else if (select_mode == 1) drawRect(main_ctx[0], x, y, 1, 1, "#ffffff");
+                            else drawRect(main_ctx[0], x, y, 1, 1, "#aaaaaa");
+                        }
+                    },
+                    "mouseup" : function (e) {
+                        select_mode = 3;
+                    },
+                    "contextmenu" : function () {
+                        return false;
+                    }
+                });
+            });
+        </script>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+            html, body {
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+            hr {
+                width: 90%;
+                margin: 10px auto;
+                border-width: 2px;
+            }
+            section {
+                width: 1000px;
+                height: 100%;
+                margin: 0 auto;
+                padding: 10px;
+                background-color: #ffffaa;
+            }
+            #option {
+                width: 100%;
+            }
+            #wrapper {
+                display : grid;
+                gap: 5px;
+                justify-content: center;
+                width: 100%;
+
+                > div {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+
+                    > canvas{
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <div id="option">
+                <form>
+                    <div>
+                        <p>select mode  </p>
+                        <input type="radio" name="select" id="select" value="select" checked="checked"/><label for="select">select</label>
+                        <input type="radio" name="select" id="always" value="always"/><label for="always">always</label>
+                    </div>
+                    <div>
+                        <p>error check</p>
+                        <input type="radio" name="error" id="yes" value="yes" checked="checked"/><label for="yes">yes</label>
+                        <input type="radio" name="error" id="no" value="no"/><label for="no">no</label>
+                    </div>
+                </form>
+            </div>
+
+            <hr/>
+
+            <div id="wrapper">
+                <div></div>
+                <div id="col_clue">
+                    <canvas class="pixel"></canvas>
+                    <canvas class="effect"></canvas>
+                    <canvas class="line"></canvas>
+                </div>
+                <div id="row_clue">
+                    <canvas class="pixel"></canvas>
+                    <canvas class="effect"></canvas>
+                    <canvas class="line"></canvas>
+                </div>
+                <div id="main">
+                    <canvas class="pixel"></canvas>
+                    <canvas class="effect"></canvas>
+                    <canvas class="line"></canvas>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<h3 class="title">퍼즐 플레이</h3>
+<div>
+    <form>
+        <table class="list">
+            <tbody>
+                <tr>
+                    <%- include("../list/head"); %>
+                </tr>
+                <tr>
+                    <%- include("../list/body", {
+                        "puzzle" : puzzle
+                    }); %>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+</div>
+
+<h3 class="title">퍼즐 삭제</h3>
+<div>
+    <form>
+        <table class="option">
+            <tbody>
+                <tr>
+                    <td>비밀번호</td>
+                    <td>
+                        <input id="password" type="password" name="password"/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="buttons">
+            <input class="hover" id="delete" type="button" name="delete" value="확인"/>
+        </div>
+    </form>
+</div>
+
+<div>
+    <form>
+        <table class="option">
+            <tr>
+                <td>선택 모드</td>
+                <td>
+                    <div class="radio">
+                        <input class="input_select" id="always" type="radio" name="select" value="always" checked="checked"/>
+                        <label for="always">항상</label>
+                    </div>
+                    <div class="radio">
+                        <input class="input_select" id="cycle" type="radio" name="select" value="cycle"/>
+                        <label for="cycle">사이클</label>
+                    </div>
+                    <div class="radio">
+                        <input class="input_select" id="select" type="radio" name="select" value="select"/>
+                        <label for="select">선택</label>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="buttons">
+            <input class="hover" id="submit" type="button" value="제출"/>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $(document).contextmenu(function () {
+                return false;
+            });
+            $(document).ready(function () {
+
+            });
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <nav id="gnb_wrapper">
+            <div id="gnb">
+                <a href="#">
+                    <img src="asset/logo1.svg" height="70%"/>
+                </a>
+                <div>
+                    퍼즐 찾기
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">전체 퍼즐</a>
+                        </div>
+                        <div>
+                            <a href="#">랜덤 퍼즐</a>
+                        </div>
+                        <div>
+                            <a href="#">검색</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    퍼즐 등록
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">퍼즐 등록</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    정보
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">정보</a>
+                        </div>
+                        <div>
+                            <a href="#">자주 묻는 질문</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <section id="main_wrapper">
+            <!-- 전체 퍼즐 수
+            명쾌한 퍼즐 수
+            풀린 퍼즐 수-->
+            <div id="main">
+                <article class="container" id="popular_puzzle">
+                    <div class="text title">
+                        인기 퍼즐
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>크기</th>
+                                <th>논리</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1234</td>
+                                <td>ㅏㅘㄴsdfsdfsasdasdasdasdfs어히ㅓ</td>
+                                <td>20&Cross;30</td>
+                                <td>경우</td>
+                                <td>2024/01/01</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <article class="container" id="recent_puzzle">
+                    <div class="text title">
+                        최근 퍼즐
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>크기</th>
+                                <th>논리</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1234</td>
+                                <td>ㅏㅘㄴsdfsdfsasdasdasdasdfs어히ㅓ</td>
+                                <td>20&Cross;30</td>
+                                <td>경우</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <article class="container" id="random_puzzle">
+                    <div class="text title">
+                        랜덤 퍼즐
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>크기</th>
+                                <th>논리</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1234</td>
+                                <td>ㅏㅘㄴsdfsdfsdfs어히ㅓ</td>
+                                <td>20&Cross;30</td>
+                                <td>경우</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+            </div>
+        </section>
+        <footer id="footer">
+            © 2024. All Rights Reserved.
+        </footer>
+    </body>
+</html>

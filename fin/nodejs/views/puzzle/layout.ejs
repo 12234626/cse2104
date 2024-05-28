@@ -1,0 +1,40 @@
+<%
+const clue = puzzle["clue"], max_clue_size = puzzle["max_clue_size"];
+%>
+<script src="js/puzzle/layout.js"></script>
+<link rel="stylesheet" href="css/puzzle.css"/>
+<script src="js/puzzle/<%- file %>.js"></script>
+<div id="table_wrapper">
+    <div>
+        <%- include(`${file}`, {
+            "puzzle" : puzzle
+        }); %>
+    </div>
+    <div id="color_preview">
+        왼쪽 클릭 : <span class="color_preview" id="color_preview_left">&#x25A0;</span>
+        오른쪽 클릭 : <span class="color_preview" id="color_preview_right">&#x25A0;</span>
+    </div>
+    <div id="table_container" data-puzzle='<%- JSON.stringify({
+        "id" : puzzle["id"],
+        "clue" : puzzle["clue"],
+        "max_clue_size" : puzzle["max_clue_size"]
+    }); %>'>
+        <div class="hl" id="hl_row"></div>
+        <div class="hl" id="hl_col"></div>
+        <div class="clue" id="clue_row">
+            <% for (let i = 0; i < clue[0]; ++i) for (let j = 0; j < max_clue_size[0]; ++j) { %>
+                <div class="clue clue_row cell <% if (i % 5 === 0) { %> <%- "sep_top" %> <% } %> <% if (j % 5 === 0) { %> <%- "sep_left" %> <% } %>" id="clue_row_cell_<%- i %>_<%- j %>" data-row="<%- i %>" data-col="<%- j %>"></div>
+            <% } %>
+        </div>
+        <div class="clue" id="clue_col">
+            <% for (let i = 0; i < max_clue_size[1]; ++i) for (let j = 0; j < clue[1]; ++j) { %>
+                <div class="clue clue_col cell <% if (i % 5 === 0) { %> <%- "sep_top" %> <% } %> <% if (j % 5 === 0) { %> <%- "sep_left" %> <% } %>" id="clue_col_cell_<%- i %>_<%- j %>" data-row="<%- i %>" data-col="<%- j %>"></div>
+            <% } %>
+        </div>
+        <div id="cross">
+            <% for (let i = 0; i < clue[0]; ++i) for (let j = 0; j < clue[1]; ++j) { %>
+                <div class="cross cell <% if (i % 5 === 0) { %> <%- "sep_top" %> <% } %> <% if (j % 5 === 0) { %> <%- "sep_left" %> <% } %>" id="cross_cell_<%- i %>_<%- j %>" data-row="<%- i %>" data-col="<%- j %>"></div>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            const rect_size = 50, stroke_width = 5;
+            const makeSVGElement = function (tag, attr, cls) {
+                return $(document.createElementNS("http://www.w3.org/2000/svg", tag)).attr(attr).addClass(cls);
+            }
+            const makeRect = function (x, y, attr, cls) {
+                attr["x"] = `${x * rect_size}px`;
+                attr["y"] = `${y * rect_size}px`;
+                attr["width"] = attr["height"] = `${rect_size}px`;
+
+                return makeSVGElement("rect", attr, cls);
+            }
+            const makeLine = function (x1, y1, x2, y2, attr, cls) {
+                attr["x1"] = `${x1 * rect_size}px`;
+                attr["y1"] = `${y1 * rect_size}px`;
+                attr["x2"] = `${x2 * rect_size}px`;
+                attr["y2"] = `${y2 * rect_size}px`;
+                attr["stroke-width"] = `${stroke_width}px`;
+
+                return makeSVGElement("line", attr, cls);
+            }
+
+            $(document).ready(function () {
+                const canvas = $("#canvas");
+                const row_clue = canvas.find("#row_clue");
+                const col_clue = canvas.find("#col_clue");
+                const table = canvas.find("#table");
+                const line = canvas.find("#line");
+                let width = 0, height = 0;
+                let shift = false;
+
+                let r = 200, c = 200, mx_row_clue = 2, mx_col_clue = 3;
+
+                width = (c + mx_col_clue) * rect_size;
+                height = (r + mx_row_clue) * rect_size;
+                canvas.attr({
+                    "viewBox" : `0, 0 ${width} ${height}`,
+                    "width" : `${width}px`,
+                    "height" : `${height}px`
+                });
+                canvas.css({"border" : "blue 5px dashed"});
+                for (let i = mx_row_clue; i < r + mx_row_clue; ++i) for (let j = 0; j < mx_col_clue; ++j) row_clue.append(makeRect(j, i, {"data-row" : `${i - mx_row_clue}`}, "clue row_clue"));
+                for (let i = 0; i < mx_row_clue; ++i) for (let j = mx_col_clue; j < c + mx_col_clue; ++j) col_clue.append(makeRect(j, i, {"data-col" : `${j - mx_col_clue}`}, "clue col_clue"));
+                for (let i = mx_row_clue; i < r + mx_row_clue; ++i) for (let j = mx_col_clue; j < c + mx_col_clue; ++j) table.append(makeRect(j, i, {"data-row" : `${i - mx_row_clue}`, "data-col" : `${j - mx_col_clue}`}, "table"));
+                line.append(makeLine(0, mx_row_clue, c + mx_col_clue, mx_row_clue, {}, "main"));
+                line.append(makeLine(mx_col_clue, 0, mx_col_clue, r + mx_row_clue, {}, "main"));
+                for (let i = 0; i < mx_row_clue; ++i) line.append(makeLine(mx_col_clue, i, c + mx_col_clue, i, {}, "clue row_clue"));
+                for (let j = 0; j < mx_col_clue; ++j) line.append(makeLine(j, mx_row_clue, j, r + mx_row_clue, {}, "clue col_clue"));
+                for (let i = mx_row_clue + 1; i < r + mx_row_clue; ++i) line.append(makeLine(0, i, c + mx_col_clue, i, {}, "table"));
+                for (let j = mx_col_clue + 1; j < c + mx_col_clue; ++j) line.append(makeLine(j, 0, j, r + mx_row_clue, {}, "table"));
+                // $(document).on({
+                //     "keydown": function (e) {
+                //             if (e.key == "Shift") shift = true;
+                //     },
+                //     "keyup" : function (e) {
+                //         if (e.key == "Shift") shift = false;
+                //     }
+                // });
+                // $(document).on("mousewheel DOMMouseScroll", function (e) {
+                //     console.log(shift);
+                //     if (shift) {
+                //         left += Math.floor(e.originalEvent.wheelDelta / 20);
+                //         right += Math.floor(e.originalEvent.wheelDelta / 20);
+                //     } else {
+                //         top += Math.floor(e.originalEvent.wheelDelta / 20);
+                //         bottom += Math.floor(e.originalEvent.wheelDelta / 20);
+                //     }
+                //     canvas.attr({"viewBox" : `${left} ${top} ${right} ${bottom}`})
+                // });
+                // table.on({
+                //     "mousemove" : function (e) {
+                //         if ($(e.target).hasClass("table")) {
+                //             row_clue.find(`[data-row=${$(e.target).attr("data-row")}]`).addClass("hover");
+                //             col_clue.find(`[data-col=${$(e.target).attr("data-col")}]`).addClass("hover");
+                //         }
+                //     },
+                //     "mouseleave" : function (e) {
+                //         if ($(e.target).hasClass("table")) {
+                //             row_clue.find(`[data-row=${$(e.target).attr("data-row")}]`).removeClass("hover");
+                //             col_clue.find(`[data-col=${$(e.target).attr("data-col")}]`).removeClass("hover");
+                //         }
+                //     }
+                // });
+            });
+        </script>
+        <style>
+            rect {
+                fill: #00000000;
+                &.table {
+                    &:hover {
+                        fill: #aaaaaa;
+                    }
+                    &:active {
+                        fill: #aaffaa;
+                    }
+                }
+                &.hover {
+                    fill: magenta;
+                }
+            }
+            line {
+                stroke: black;
+            }
+        </style>
+    </head>
+    <body>
+        <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+            <g id="row_clue"></g>
+            <g id="col_clue"></g>
+            <g id="table"></g>
+            <g id="line"></g>
+        </svg>
+    </body>
+</html>

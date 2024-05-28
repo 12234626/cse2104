@@ -1,0 +1,38 @@
+<body>
+
+    <head>
+        <style>
+            .shadow {
+                background-color: gray;
+                padding: 10px;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const menu = document.querySelectorAll("#menu li");
+                for (let item of menu) {
+                    item.addEventListener("click", function () {
+                        item.classList.toggle('shadow');
+                    });
+                }
+                const heading = document.querySelector("h3");
+                heading.addEventListener('click', function () {
+                    heading.classList.toggle('shadow');
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <nav id="menu">
+            <ul>
+                <li>A</li>
+                <li>B</li>
+                <li>C</li>
+            </ul>
+        </nav>
+        <h3>
+            asdasdasdasd
+        </h3>
+    </body>
+</body>

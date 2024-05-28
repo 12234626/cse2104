@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script>
+            $(document).contextmenu(function () {
+                return false;
+            });
+            $(document).ready(function () {
+                const inputLeft = document.getElementById("input-left");
+            const inputRight = document.getElementById("input-right");
+
+            const thumbLeft = document.querySelector(".slider > .thumb.left");
+            const thumbRight = document.querySelector(".slider > .thumb.right");
+            const range = document.querySelector(".slider > .range");
+
+            const setLeftValue = () => {
+            const _this = inputLeft;
+            const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+            
+            // 교차되지 않게, 1을 빼준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+            _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value) - 1);
+            
+            // input, thumb 같이 움직이도록
+            const percent = ((_this.value - min) / (max - min)) * 100;
+            thumbLeft.style.left = percent + "%";
+            range.style.left = percent + "%";
+            };
+
+            const setRightValue = () => {
+            const _this = inputRight;
+            const [min, max] = [parseInt(_this.min), parseInt(_this.max)];
+            
+            // 교차되지 않게, 1을 더해준 건 완전히 겹치기보다는 어느 정도 간격을 남겨두기 위해.
+            _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + 1);
+            
+            // input, thumb 같이 움직이도록
+            const percent = ((_this.value - min) / (max - min)) * 100;
+            thumbRight.style.right = 100 - percent + "%";
+            range.style.right = 100 - percent + "%";
+            };
+
+            inputLeft.addEventListener("input", setLeftValue);
+            inputRight.addEventListener("input", setRightValue);
+            });
+        </script>
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet"/>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <nav id="gnb_wrapper">
+            <div id="gnb">
+                <a href="#">
+                    <img src="asset/logo1.svg" height="70%"/>
+                </a>
+                <div>
+                    퍼즐 찾기
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">전체 퍼즐</a>
+                        </div>
+                        <div>
+                            <a href="#">랜덤 퍼즐</a>
+                        </div>
+                        <div>
+                            <a href="#">검색</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    퍼즐 등록
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">퍼즐 등록</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    정보
+                    <div class="dropdown list">
+                        <div>
+                            <a href="#">정보</a>
+                        </div>
+                        <div>
+                            <a href="#">자주 묻는 질문</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <section id="main_wrapper">
+            <div id="main_search">
+                <form id="form">
+                    <table>
+                        <tr>
+                            <td>제목</td>
+                            <td><input type="text"/></td>
+                        </tr>
+                        
+                        <tr>
+                            <td>크기 프리셋</td>
+                            <td>
+                                <div>
+                                    <input type="radio"/><label>5x5</label>
+                                    <input type="radio"/><label>10x10</label>
+                                    <input type="radio"/><label>20x20</label>
+                                    <input type="radio"/><label>30x30</label>
+                                    <input type="radio"/><label>50x50</label>
+                                    <input type="radio"/><label>100x100</label>
+                                    <input type="radio"/><label>150x150</label>
+                                    <input type="radio"/><label>200x200</label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>가로</td>
+                            <td>
+                                <div>
+
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>세로</td>
+                            <td>
+                                <div>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>논리</td>
+                            <td>
+                                <input type="radio"/><label>단순</label>
+                                <input type="radio"/><label>경우</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>난이도</td>
+                            <td>
+                                <div>
+
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>날짜</td>
+                            <td>
+                                <input type="date">부터 ~
+                                <input type="date">까지
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>정렬</td>
+                            <td>
+                                <select>
+                                    <option>크기</option>
+                                    <option>추천</option>
+                                    <option>추천비율</option>
+                                    <option>난이도</option>
+                                    <option>푼사람수</option>
+                                    <option selected="selected">날짜</option>
+                                    <option>랜덤</option>
+                                </select>
+                                <input type="checkbox"/><label>역순</label>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <div id="button">
+                        <input type="button" value="검색"/>
+                        <input type="reset" value="초기화"/>
+                    </div>
+                    
+                    <!-- <div class="middle">
+                        <div class="multi-range-slider">
+                          <input type="range" id="input-left" min="0" max="100" value="25" />
+                          <input type="range" id="input-right" min="0" max="100" value="75" />
+                      
+                          <div class="slider">
+                            <div class="track"></div>
+                            <div class="range"></div>
+                            <div class="thumb left"></div>
+                            <div class="thumb right"></div>
+                          </div>
+                        </div>
+                    </div> -->
+                </form>
+
+
+                <article id="result">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>제목</th>
+                                <th>크기</th>
+                                <th>논리</th>
+                                <th>추천</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1234</td>
+                                <td>ㅏㅘㄴsdfsdfsasdasdasdasdfs어히ㅓ</td>
+                                <td>20&Cross;30</td>
+                                <td>경우</td>
+                                <td>2024/01/01</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                            <tr>
+                                <td>ID</td>
+                                <td>이름</td>
+                                <td>크기</td>
+                                <td>단순</td>
+                                <td>추천</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </article>
+                <div id="arrow">
+                    <ul></ul>
+                </div>
+            </div>
+        </section>
+        <footer id="footer">
+            © 2024. All Rights Reserved.
+        </footer>
+    </body>
+</html>
