@@ -1,15 +1,16 @@
-<script src="js/search/layout.js"></script>
 <link rel="stylesheet" href="css/search.css"/>
-<script src="js/search/<%- file %>.js"></script>
+
 <div id="search_wrapper">
     <div>
         <%- include(`${file}`); %>
     </div>
+
     <div>
         <%- include("../list/layout", {
             "puzzles" : puzzles
         }); %>
     </div>
+
     <div class="indexer">
         <% let queries = "";
 

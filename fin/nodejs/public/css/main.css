@@ -16,10 +16,10 @@
     /* > #popular_puzzle {
         
     }
-    > #recent_puzzle {
+    > #recent {
         
     }
-    > #random_puzzle {
+    > #random {
         grid-column: 1 / 3;
     } */
 }

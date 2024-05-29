@@ -1,30 +1,22 @@
-<!-- 전체 퍼즐 수
-명쾌한 퍼즐 수
-풀린 퍼즐 수-->
 <link rel="stylesheet" href="css/main.css"/>
+
+<!-- 전체 퍼즐 수
+풀린 퍼즐 수-->
 <div id="main">
-    <!-- <article class="container" id="popular_puzzle">
-        <div class="title">
-            인기 퍼즐
-        </div>
-        <%- include("list/layout", {
-            "puzzles" : recent_puzzle
-        }); %>
-    </article> -->
-    <article class="container" id="recent_puzzle">
+    <div class="container" id="recent">
         <div class="title">
             최근 퍼즐
         </div>
         <%- include("list/layout", {
-            "puzzles" : recent_puzzle
+            "puzzles" : recent
         }); %>
-    </article>
-    <article class="container" id="random_puzzle">
+    </div>
+    <div class="container" id="random">
         <div class="title">
             랜덤 퍼즐
         </div>
         <%- include("list/layout", {
-            "puzzles" : random_puzzle
+            "puzzles" : random
         }); %>
-    </article>
+    </div>
 </div>

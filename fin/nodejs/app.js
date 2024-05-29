@@ -11,7 +11,6 @@ const port = process.env.PORT || 3000;
 app
 .set("view engine", "ejs")
 .set("views", "./views");
-// app.set("layout extractScripts", true);
 
 app
 .use(express.json())

@@ -1,5 +1,6 @@
 import {readJSON, writeJSON} from "./json.js";
-import {refineAuthor, refinePassword, refineTitle} from "./text.js";
+import {filterAuthor, filterPassword, filterTitle} from "./text.js";
+import {appendLog} from "./log.js";
 
 const getPuzzleByID = function (id) {
     const result = [];
@@ -33,8 +34,47 @@ const selectSortMethod = function (method) {
     default: return (a, b) => new Date(a["date"]) - new Date(b["date"]);
     }
 };
-const sortBy = function (method, reverse) {
+const compareBy = function (method, reverse) {
     return (a, b) => (reverse ? -1 : 1) * selectSortMethod(method)(a, b);
+};
+const makeClue = function (row, col, table) {
+    const clue = [row, col];
+
+    for (let k = 2, l = 0;;) {
+        for (let i = 0; i < row; ++i, k += clue[k] + 1, l = 0) {
+            clue.push(0);
+            for (let j = 0; j < col; ++j) {
+                if (table[i][j] === 2) ++l;
+                else if (l) {
+                    temp.push(l);
+                    l = 0;
+                }
+            }
+            if (l) temp.push(l);
+            if (!clue[k]) {
+                clue[k] = 1;
+                clue.push(0);
+            };
+        }
+        for (let j = 0; j < col; ++j, k += clue[k] + 1, l = 0) {
+            clue.push(0);
+            for (let i = 0; i < row; ++i) {
+                if (table[i][j] === 2) ++l;
+                else if (l) {
+                    temp.push(l);
+                    l = 0;
+                }
+            }
+            if (l) temp.push(l);
+            if (!clue[k]) {
+                clue[k] = 1;
+                clue.push(0);
+            };
+        }
+
+        return clue;
+    }
+    return [];
 };
 const makePuzzle = function (id, author, password, title, clue, xd, logic) {
     const max_clue_size = [0, 0];
@@ -46,9 +86,9 @@ const makePuzzle = function (id, author, password, title, clue, xd, logic) {
 
     return {
         "id" : id,
-        "author" : refineAuthor(author),
-        "password" : refinePassword(password),
-        "title" : refineTitle(title),
+        "author" : filterAuthor(author),
+        "password" : filterPassword(password),
+        "title" : filterTitle(title),
         "clue" : clue,
         "max_clue_size" : max_clue_size,
         "row" : clue[0],
@@ -64,12 +104,25 @@ const appendPuzzle = function (puzzle) {
 
     puzzles.push(puzzle);
     writeJSON("puzzles.json", puzzles);
+    appendLog("CREATE_PUZZLE", {
+        "id" : puzzle["id"],
+        "author" : puzzle["author"],
+        "title" : puzzle["title"],
+        "date" : puzzle["date"],
+    });
 };
 const deletePuzzle = function (id) {
     const puzzles = readJSON("puzzles.json");
+    const puzzle_index = puzzles.findIndex(e => e["id"] === id)
 
-    if (puzzles.findIndex(e => e["id"] === id) !== -1) {
+    if (puzzle_index !== -1) {
         writeJSON("puzzles.json", puzzles.filter(e => e["id"] !== id));
+        appendLog("DELETE_PUZZLE", {
+            "id" : puzzles[puzzle_index]["id"],
+            "author" : puzzles[puzzle_index]["author"],
+            "title" : puzzles[puzzle_index]["title"],
+            "date" : puzzles[puzzle_index]["date"],
+        });
 
         return true;
     }
@@ -79,7 +132,8 @@ const deletePuzzle = function (id) {
 export {
     getPuzzleByID,
     getPuzzleByQuery,
-    sortBy,
+    compareBy,
+    makeClue,
     makePuzzle,
     appendPuzzle,
     deletePuzzle

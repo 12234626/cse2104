@@ -1,7 +1,7 @@
 import express from "express";
 import {readJSON} from "../api/json.js";
 import {solve} from "../api/wasm.js";
-import {getPuzzleByID, makePuzzle, appendPuzzle, deletePuzzle} from "../api/puzzle.js";
+import {getPuzzleByID, makeClue, makePuzzle, appendPuzzle, deletePuzzle} from "../api/puzzle.js";
 import {getID} from "../api/id.js";
 
 const router = express.Router();
@@ -32,7 +32,7 @@ router
 });
 router
 .post("/examine", function (req, res) {
-    const {author, title, clue} = req.body;
+    const {author, title, row, col, table} = req.body, clue = makeClue(row, col, table);
     const {result, xd, logic} = solve(clue);
 
     if (result) {
@@ -42,7 +42,7 @@ router
     }
 })
 .post("/register", function (req, res) {
-    const {password, author, title, clue} = req.body;
+    const {password, author, title, row, col, table} = req.body, clue = makeClue(row, col, table);
     const {result, xd, logic} = solve(clue);
 
     if (result) {
@@ -54,14 +54,12 @@ router
     }
 })
 .post("/solve", function (req, res) {
-    const {clue} = req.body;
+    const {clue, table} = req.body;
     const {result} = solve(clue);
+    let flag = true;
 
-    if (result) {
-        res.send(result);
-    } else {
-        res.send([]);
-    }
+    for (let i = 0; i < clue[0]; ++i) for (let j = 0; j < clue[1]; ++j) if ((result[i][j] === 2) !== (table[i][j] === 2)) flag = false;
+    res.send(flag);
 })
 .post("/delete", function (req, res) {
     const {id, password} = req.body;

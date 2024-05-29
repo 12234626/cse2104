@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="ko">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="js/layout.js"></script>
+        <script src="js/layout.js" defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
@@ -12,6 +15,9 @@
         <title>노노그램 | <%- title %></title>
     </head>
     <body>
+        <div id="loader">
+            <img src="image/logo1.svg" height="100px"/>
+        </div>
         <nav id="gnb_wrapper">
             <div id="gnb">
                 <ul>
@@ -62,5 +68,6 @@
         <footer id="footer">
             &copy; 2024. All Rights Reserved.
         </footer>
+        <script src="js/loader.js" defer></script>
     </body>
 </html>
