@@ -8,7 +8,6 @@ router.get("/", function (req, res) {
 
     res.render("main", {
         "title" : "메인 페이지",
-        // "popular_puzzle" : puzzles.slice(-5),
         "recent" : puzzles.slice(-5).reverse(),
         "random" : puzzles.sort(() => Math.random() - 0.5).slice(-5)
     });
