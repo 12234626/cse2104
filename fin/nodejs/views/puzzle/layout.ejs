@@ -40,6 +40,7 @@ const clue = puzzle["clue"], max_clue_size = puzzle["max_clue_size"];
             <% for (let i = 0; i < clue[0]; ++i) for (let j = 0; j < clue[1]; ++j) { %>
                 <div class="cell cross <% if (i % 5 === 0) { %> <%- "sep_top" %> <% } %> <% if (j % 5 === 0) { %> <%- "sep_left" %> <% } %>" id="cross_cell_<%- i %>_<%- j %>" data-row="<%- i %>" data-col="<%- j %>"></div>
             <% } %>
+            <div id="interact"></div>
         </div>
     </div>
 </div>
