@@ -24,7 +24,7 @@
         > * {
             display: grid;
             
-            > .hl {
+            &.hl {
                 display: none;
                 position: absolute;
                 z-index: 1;
