@@ -1,15 +1,13 @@
 import express from "express";
-import {readJSON} from "../api/json.js";
+import {PuzzleDAO} from "../api/db.js";
 
 const router = express.Router();
 
 router.get("/", function (req, res) {
-    const puzzles = readJSON("puzzles.json");
-
     res.render("main", {
         "title" : "메인 페이지",
-        "recent" : puzzles.slice(-5).reverse(),
-        "random" : puzzles.sort(() => Math.random() - 0.5).slice(-5)
+        "recent" : PuzzleDAO.sortBy(PuzzleDAO.getPuzzles(), "date", true).slice(0, 5),
+        "random" : PuzzleDAO.sortBy(PuzzleDAO.getPuzzles(), "random", false).slice(0, 5)
     });
 });
 

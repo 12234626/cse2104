@@ -1,6 +1,5 @@
 import express from "express";
-import {readJSON} from "../api/json.js";
-import {getPuzzleByQuery, compareBy} from "../api/puzzle.js";
+import {PuzzleDAO} from "../api/db.js";
 import {calcPage} from "../api/page.js";
 
 const router = express.Router();
@@ -16,7 +15,7 @@ router
         "file" : "all",
         "title" : "전체 퍼즐",
         "form" : {},
-        ...calcPage(readJSON("puzzles.json").sort(compareBy("date", true)), parseInt(page) || 1)
+        ...calcPage(PuzzleDAO.sortBy(PuzzleDAO.getPuzzles(), "date", true), parseInt(page) || 1)
     });
 })
 .get("/query", function (req, res) {
@@ -42,7 +41,7 @@ router
         "file" : "query",
         "title" : "퍼즐 검색",
         "form" : query,
-        ...calcPage(getPuzzleByQuery(query).sort(compareBy(sort, reverse === "true")), parseInt(page) || 1)
+        ...calcPage(PuzzleDAO.sortBy(PuzzleDAO.getPuzzleByQuery(query), sort, reverse === "true"), parseInt(page) || 1)
     });
 });
 

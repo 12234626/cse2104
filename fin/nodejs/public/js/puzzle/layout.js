@@ -3,7 +3,7 @@ const color_preview_left = $("#color_preview_left"), color_preview_right = $("#c
 const table_container = $("#table_container"), table_clue_row = table_container.find("#clue_row"), table_clue_col = table_container.find("#clue_col"), table_cross = table_container.find("#cross"), table_interact = table_container.find("#interact");
 const hl = $(".hl"), hl_row = $("#hl_row"), hl_col = $("#hl_col");
 const cell_cross = table_cross.find(".cell.cross");
-const cell_size = 20;
+const cell_size = 20, precision = 0.5 * cell_size;
 
 const puzzle = {}, clue = [], max_clue_size = [], table = [];
 let select_mode = input_select.filter("[checked=checked]").val(), color = 3, color_left = 3, color_right = 3;
@@ -48,6 +48,10 @@ const recolor = function (e, color) {
     if (color === 2) e.addClass("black");
     else if (color === 1) e.addClass("white");
 }
+const setTable = function (row, col, color) {
+    table[row][col] = color;
+    recolor($(cell_cross[row * clue[1] + col]), color);
+}
 const changeClick = function (select_mode, target) {
     if (select_mode === "select") {
         color_left = target.hasClass("black") ? 0 : 2;
@@ -85,19 +89,15 @@ table_interact.on({
 
         if (color === 3) {
             const row = Math.floor(next_y / cell_size), col = Math.floor(next_x / cell_size);
-            const target = $(cell_cross[row * clue[1] + col]);
 
-            changeClick(select_mode, target);
+            changeClick(select_mode, $(cell_cross[row * clue[1] + col]));
         } else {
-            const precision = 2 / 20;
             const diff_x = next_x - prev_x, diff_y = next_y - prev_y, dist = Math.sqrt(diff_x * diff_x + diff_y * diff_y);
-            const dx = diff_x / dist / precision, dy = diff_y / dist / precision;
-            for (let i = 0; i < precision * Math.sqrt(diff_x ** 2 + diff_y ** 2); ++i) {
+            const dx = precision * diff_x / dist, dy = precision * diff_y / dist;
+            for (let i = 0; i < Math.sqrt(diff_x ** 2 + diff_y ** 2) / precision; ++i) {
                 const row = Math.floor((prev_y + i * dy) / cell_size), col = Math.floor((prev_x + i * dx) / cell_size);
-                const target = $(cell_cross[row * clue[1] + col]);
 
-                table[row][col] = color;
-                recolor(target, color);
+                setTable(row, col, color);
             }
         }
 
@@ -106,29 +106,25 @@ table_interact.on({
     },
     "mouseleave" : function (e) {
         const row = Math.floor(parseInt(e.offsetY) / cell_size), col = Math.floor(parseInt(e.offsetX) / cell_size);
-        const target = $(cell_cross[row * clue[1] + col]);
 
         hl.css({
             "display" : "none"
         });
         color = 3;
-        changeClick(select_mode, target);
+        changeClick(select_mode, $(cell_cross[row * clue[1] + col]));
     },
     "mousedown" : function (e) {
         const row = Math.floor(parseInt(e.offsetY) / cell_size), col = Math.floor(parseInt(e.offsetX) / cell_size);
-        const target = $(cell_cross[row * clue[1] + col]);
 
         color = e.button === 0 || e.which === 1 ? color_left : e.button === 2 || e.which === 3 ? color_right : 3;
         if (color !== 3) {
-            table[row][col] = color;
-            recolor(target, color);
+            setTable(row, col, color);
         }
     },
     "mouseup" : function (e) {
         const row = Math.floor(parseInt(e.offsetY) / cell_size), col = Math.floor(parseInt(e.offsetX) / cell_size);
-        const target = $(cell_cross[row * clue[1] + col]);
 
         color = 3;
-        changeClick(select_mode, target);
+        changeClick(select_mode, $(cell_cross[row * clue[1] + col]));
     }
 });

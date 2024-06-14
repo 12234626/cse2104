@@ -4,16 +4,6 @@
 <div>
     <form>
         <table class="option">
-            <!-- <tr class="sep">
-                <td>사전 이미지</td>
-                <td>
-                    <div id="file">
-                        <input id="file" type="file" name="file" accept="image/*"/>
-                        <label for="file">업로드</label>
-                    </div>
-                </td>
-            </tr> -->
-
             <tr>
                 <td>닉네임</td>
                 <td>
@@ -35,6 +25,16 @@
             </tr>
             
             <tr class="sep">
+                <td>사전 이미지</td>
+                <td>
+                    <div>
+                        <input id="file" type="file" name="file" accept="image/*"/>
+                        <label for="file">업로드</label>
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="sep">
                 <td>크기</td>
                 <td>
                     <input class="input_size" id="row" type="number" name="col" min="1" max="200" value="20"/>&Cross;
@@ -46,11 +46,11 @@
                 <td>선택 모드</td>
                 <td>
                     <div class="radio">
-                        <input class="input_select" id="always" type="radio" name="select" value="always" checked="checked"/>
+                        <input class="input_select" id="always" type="radio" name="select" value="always"/>
                         <label for="always">항상</label>
                     </div>
                     <div class="radio">
-                        <input class="input_select" id="select" type="radio" name="select" value="cycle_bw"/>
+                        <input class="input_select" id="select" type="radio" name="select" value="cycle_bw" checked="checked"/>
                         <label for="select">사이클</label>
                     </div>
                 </td>
@@ -66,10 +66,10 @@
             <summary class="title">검증 결과</summary>
             <table class="info" id="examine_result">
                 <thead>
-                    <%- include("../list/head"); %>
+                    <th>제작자</th><th>제목</th><th>크기</th><th>난이도 (배율)</th><th>논리</th>
                 </thead>
                 <tbody>
-                    <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+                    <tr><td></td><td></td><td></td><td></td><td></td></tr>
                 </tbody>
             </table>
         </details>

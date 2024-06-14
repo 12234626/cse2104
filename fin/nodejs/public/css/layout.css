@@ -38,22 +38,27 @@ input {
         width: 100px;
         text-align: center;
     }
-    &[type=button], &[type=submit], &[type=reset] {
+    &[type=button], &[type=submit], &[type=reset], &[type=file] + label {
+        display: inline-block;
         width: 70px;
         height: 40px;
         border-radius: 5px;
         border: 1px #ccc solid;
+        line-height: 40px;
         text-align: center;
         font-weight: 700;
         cursor: pointer;
     }
-    &[type=button], &[type=submit] {
+    &[type=button], &[type=submit], &[type=file] + label {
         background-color: #f96;
         color: #fff;
     }
     &[type=reset] {
         background-color: #fff;
         color: #f96;
+    }
+    &[type=file] {
+        display: none;
     }
 }
 .checkbox, .radio {
@@ -160,11 +165,8 @@ table {
     0% {
         transform: translateY(10px);
     }
-    50% {
-        transform: translateY(-10px);
-    }
     100% {
-        transform: translateY(10px);
+        transform: translateY(-10px);
     }
 }
 #loader {
@@ -180,7 +182,7 @@ table {
     backdrop-filter: blur(10px);
 
     > img {
-        animation: load 1s infinite ease-in-out;
+        animation: alternate 1s infinite load ease-in-out;
     }
 }
 

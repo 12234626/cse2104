@@ -1,13 +1,15 @@
 import {readJSON, writeJSON} from "./json.js";
 
-const appendLog = function (type, log) {
+const appendLog = function (type, content) {
     const logs = readJSON("logs.json");
-
-    logs.push({
+    const log = {
         "type" : type,
-        "log" : log
-    });
+        "content" : content
+    };
+    
+    logs.push(log);
     writeJSON("logs.json", logs);
+    console.log(log);
 };
 
 export {

@@ -32,7 +32,7 @@ const solve = function (clue) {
         };
     }
     return {
-        "result" : []
+        "result" : null
     };
 };
 

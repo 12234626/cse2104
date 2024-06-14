@@ -3,5 +3,5 @@
 <td><%- puzzle["title"] %></td>
 <td><%- puzzle["row"] %>&Cross;<%- puzzle["col"] %></td>
 <td><%- puzzle["xd"] %> (<%- puzzle["xd_mag"].toFixed(1); %>)</td>
-<td><%- puzzle["logic"] %></td>
+<td><%- puzzle["logic"] ? "선택" : "단일" %></td>
 <td><%- new Date(puzzle["date"]).toLocaleDateString(); %></td>

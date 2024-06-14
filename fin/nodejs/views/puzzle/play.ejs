@@ -18,22 +18,24 @@
     </form>
 </div>
 
-<h3 class="title">퍼즐 삭제</h3>
 <div>
     <form>
-        <table class="option">
-            <tbody>
-                <tr>
-                    <td>비밀번호</td>
-                    <td>
-                        <input id="password" type="password" name="password"/>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="buttons">
-            <input class="hover" id="delete" type="button" name="delete" value="확인"/>
-        </div>
+        <details>
+            <summary class="title">퍼즐 삭제</summary>
+            <table class="option">
+                <tbody>
+                    <tr>
+                        <td>비밀번호</td>
+                        <td>
+                            <input id="password" type="password" name="password"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="buttons">
+                <input class="hover" id="delete" type="button" name="delete" value="확인"/>
+            </div>
+        </details>
     </form>
 </div>
 
@@ -44,11 +46,11 @@
                 <td>선택 모드</td>
                 <td>
                     <div class="radio">
-                        <input class="input_select" id="always" type="radio" name="select" value="always" checked="checked"/>
+                        <input class="input_select" id="always" type="radio" name="select" value="always"/>
                         <label for="always">항상</label>
                     </div>
                     <div class="radio">
-                        <input class="input_select" id="cycle" type="radio" name="select" value="cycle"/>
+                        <input class="input_select" id="cycle" type="radio" name="select" value="cycle" checked="checked"/>
                         <label for="cycle">사이클</label>
                     </div>
                     <div class="radio">
