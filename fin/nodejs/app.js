@@ -14,14 +14,9 @@ app
 
 app
 .use(express.json())
-// app.use(express.urlencoded({extended : false}))
+.use(express.urlencoded({extended : false}))
 .use(express.static("./public"))
 .use(expressEjsLayouts)
-// .use(function (req, res, next) {
-//     res.header("Cross-Origin-Embedder-Policy", "credentialless");
-//     res.header("Cross-Origin-Opener-Policy", "same-origin");
-//     next();
-// })
 .use("/", main_router)
 .use("/search", search_router)
 .use("/puzzle", puzzle_router)

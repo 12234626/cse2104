@@ -2,7 +2,7 @@ const input_password = form.find("#password");
 const button_delete = form.find("#delete"), button_submit = form.find("#submit");
 
 button_submit.click(async function () {
-    fetch("/puzzle/check", {
+    await fetch("/puzzle/check", {
         method: "post",
         headers: {
             "Content-Type": "application/json"

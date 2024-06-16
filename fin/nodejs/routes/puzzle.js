@@ -1,5 +1,5 @@
 import express from "express";
-import {readJSON} from "../api/json.js";
+import {readJSON} from "../api/utility.js";
 import {Puzzle, PuzzleDAO} from "../api/db.js";
 
 const router = express.Router();
@@ -9,30 +9,43 @@ router
 
 router
 .get("/register", function (req, res) {
-    res.render("puzzle/layout", {
-        "title" : "퍼즐 등록",
-        "file" : "register",
-        "puzzle" : readJSON("register.json")
-    });
+    try {
+        res
+        .status(200)
+        .render("puzzle/layout", {
+            "title" : "퍼즐 등록",
+            "file" : "register",
+            "puzzle" : readJSON("register.json")
+        });
+    } catch (err) {
+        res.status(500).redirect("/error");
+    }
 })
 .get("/play", function (req, res) {
-    const puzzle = PuzzleDAO.getPuzzleByID(parseInt(req.query["id"]));
+    try {
+        const puzzle = PuzzleDAO.getPuzzleByID(parseInt(req.query["id"]));
 
-    if (puzzle) {
-        res.render("puzzle/layout", {
-            "title" : "퍼즐 플레이",
-            "file" : "play",
-            "puzzle" : puzzle
-        });
-    } else {
-        res.redirect("/error");
+        if (puzzle) {
+            res
+            .status(200)
+            .render("puzzle/layout", {
+                "title" : "퍼즐 플레이",
+                "file" : "play",
+                "puzzle" : puzzle
+            });
+        } else {
+            throw null;
+        }
+    } catch (err) {
+        res.status(500).redirect("/error");
     }
 });
 router
 .post("/examine", function (req, res) {
     const puzzle = Puzzle.makePuzzleWithTable(req.body);
 
-    res.send(puzzle ? puzzle : false);
+    res
+    .send(puzzle ? puzzle : false);
 })
 .post("/register", function (req, res) {
     const puzzle = Puzzle.makePuzzleWithTable(req.body);

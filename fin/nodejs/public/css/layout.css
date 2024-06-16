@@ -278,7 +278,6 @@ table {
     margin: 100px auto;
     width: 1200px;
     min-width: 1200px;
-    /* min-height: 100%; */
 
     > div {
         padding: 0 10px;

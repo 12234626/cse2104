@@ -6,20 +6,9 @@
 
 #main {
     display: grid;
-    /* grid-template-rows: auto 1fr;
-    grid-template-columns: repeat(2, 1fr); */
     gap: 20px;
 
     > article {
         height: fit-content;
     }
-    /* > #popular_puzzle {
-        
-    }
-    > #recent {
-        
-    }
-    > #random {
-        grid-column: 1 / 3;
-    } */
 }

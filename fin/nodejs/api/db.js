@@ -1,7 +1,5 @@
-import {readJSON, writeJSON} from "./json.js";
-import {filterAuthor, filterPassword, filterTitle} from "./text.js";
+import {readJSON, writeJSON, filterAuthor, filterPassword, filterTitle} from "./utility.js";
 import {solve} from "../api/wasm.js";
-import {appendLog} from "./log.js";
 
 class Puzzle {
     constructor(author, password, title, clue, xd, logic) {
@@ -133,6 +131,17 @@ class Puzzle {
         };
     }
 }
+class PuzzleList {
+    constructor(puzzles) {
+        this.puzzles = puzzles;
+    }
+    sort(method, reverse) {
+        return new PuzzleList(this.puzzles.sort((a, b) => a.compare(b, method, reverse)));
+    }
+    slice(start, end) {
+        return new PuzzleList(this.puzzles.slice(start, end));
+    }
+}
 class PuzzleDAO {
     static generateID() {
         const id = readJSON("id.json") + 1;
@@ -142,10 +151,10 @@ class PuzzleDAO {
         return id;
     }
     static getPuzzles() {
-        return readJSON("puzzles.json").map(e => Puzzle.makePuzzleWithObj(e));
+        return new PuzzleList(readJSON("puzzles.json").map(e => Puzzle.makePuzzleWithObj(e)));
     }
     static getPuzzleByID(id) {
-        const puzzles = PuzzleDAO.getPuzzles();
+        const puzzles = PuzzleDAO.getPuzzles().puzzles;
         const result = [];
     
         for (let e of puzzles) if (e.matchByID(id)) result.push(e);
@@ -154,15 +163,12 @@ class PuzzleDAO {
         return null;
     }
     static getPuzzleByQuery = function (query) {
-        const puzzles = PuzzleDAO.getPuzzles();
+        const puzzles = PuzzleDAO.getPuzzles().puzzles;
         const result = [];
-    
+
         for (let e of puzzles) if (e.matchByQuery(query)) result.push(e);
-    
-        return result;
-    }
-    static sortBy(puzzles, method, reverse) {
-        return puzzles.sort((a, b) => a.compare(b, method, reverse));
+
+        return new PuzzleList(result);
     }
     static createPuzzle(puzzle) {
         const puzzles = PuzzleDAO.getPuzzles();
@@ -171,7 +177,7 @@ class PuzzleDAO {
         puzzle.date = new Date();
         puzzles.push(puzzle.getObj());
         writeJSON("puzzles.json", puzzles);
-        appendLog("PUZZLE_CREATED", {
+        PuzzleDAO.appendLog("PUZZLE_CREATED", {
             "id" : puzzle.id,
             "author" : puzzle.author,
             "title" : puzzle.title,
@@ -184,7 +190,7 @@ class PuzzleDAO {
 
         if (puzzle_index !== -1) {
             writeJSON("puzzles.json", puzzles.filter(e => !e.matchByID(id)));
-            appendLog("PUZZLE_DELETED", {
+            PuzzleDAO.appendLog("PUZZLE_DELETED", {
                 "id" : puzzles[puzzle_index]["id"],
                 "author" : puzzles[puzzle_index]["author"],
                 "title" : puzzles[puzzle_index]["title"],
@@ -195,9 +201,21 @@ class PuzzleDAO {
         }
         return false;
     }
+    static appendLog(type, content) {
+        const logs = readJSON("logs.json");
+        const log = {
+            "type" : type,
+            "content" : content
+        };
+        
+        logs.push(log);
+        writeJSON("logs.json", logs);
+        console.log(log);
+    };
 }
 
 export {
     Puzzle,
+    PuzzleList,
     PuzzleDAO
 };
