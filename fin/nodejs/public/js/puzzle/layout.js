@@ -75,7 +75,7 @@ input_select.change(function () {
 });
 table_interact.on({
     "mousemove" : function (e) {
-        const next_x = parseInt(e.offsetX), next_y = parseInt(e.offsetY);
+        const next_x = parseInt(e.offsetX - 1), next_y = parseInt(e.offsetY - 1);
 
         hl.css({
             "display" : "block"

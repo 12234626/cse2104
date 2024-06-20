@@ -226,56 +226,13 @@ table {
                             }
                         }
                     }
-                    &:hover {
-                        color: #69f;
-                    }
                 }
-                /* > div {
-                    position: relative;
-                    float: left;
-                    padding: 0 10px 0 10px;
-                    line-height: 70px;
-                    text-align: center;
-                    color: #fff;
-        
-                    > .dropdown {
-                        position: absolute;
-                        left: 50%;
-                        width: 130px;
-                        height: fit-content;
-                        border-radius: 0 0 5px 5px;
-                        background-color: #fff;
-                        box-shadow: 0px 0px 5px 2px #0003;
-                        text-align: center;
-                        color: #000;
-                        transform: translate(-50%, -50%) scale(0%);
-        
-                        > div {
-                            height: 50px;
-                            line-height: 50px;
-                            
-                            &:not(:last-child) {
-                                border-bottom: 1px #ccc solid;
-                            }
-                            &:hover {
-                                background-color: #ccc;
-                            }
-                        }
-                    }
-                    &:hover {
-                        color: #ccc;
-                        
-                        > .dropdown {
-                            transform: translate(-50%, 0%) scale(100%);
-                        }
-                    }
-                } */
             }
         }
     }
 }
 #body_wrapper {
-    margin: 100px auto;
+    margin: 100px auto 30px auto;
     width: 1200px;
     min-width: 1200px;
 

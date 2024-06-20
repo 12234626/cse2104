@@ -171,7 +171,7 @@ class PuzzleDAO {
         return new PuzzleList(result);
     }
     static createPuzzle(puzzle) {
-        const puzzles = PuzzleDAO.getPuzzles();
+        const puzzles = PuzzleDAO.getPuzzles().puzzles;
     
         puzzle.id = PuzzleDAO.generateID();
         puzzle.date = new Date();
@@ -185,7 +185,7 @@ class PuzzleDAO {
         });
     }
     static deletePuzzleByID(id) {
-        const puzzles = PuzzleDAO.getPuzzles();
+        const puzzles = PuzzleDAO.getPuzzles().puzzles;
         const puzzle_index = puzzles.findIndex(e => e.matchByID(id));
 
         if (puzzle_index !== -1) {

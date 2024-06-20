@@ -25,7 +25,7 @@ input_file.change(function () {
                 const img_arr = ctx.getImageData(0, 0, width, height).data;
             
                 for (let row = 0; row < height; ++row) for (let col = 0; col < width; ++col) {
-                    color = !img_arr[(row * width + col) * 4] && !img_arr[(row * width + col) * 4 + 1] && !img_arr[(row * width + col) * 4 + 2] ? 2 : 1;
+                    color = img_arr[(row * width + col) * 4] + img_arr[(row * width + col) * 4 + 1] + img_arr[(row * width + col) * 4 + 2] > 382 ? 1 : 2;
                     table[row][col] = color;
                     recolor($(cell_cross[row * clue[1] + col]), color);
                 }
